@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <title>Search</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!--
+
+TemplateMo 546 Sixteen Clothing
+
+https://templatemo.com/tm-546-sixteen-clothing
+
+-->
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/templatemo-sixteen.css">
+    <link rel="stylesheet" href="assets/css/owl.css">
+
+  </head>
+
+  <body>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+
+    <!-- Header -->
+    <header class="">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <a class="navbar-brand" href="index.html"><h2>HERIPORT <em>Web Portal</em></h2></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">Home
+                  <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="products.html">Browse Collections</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="contact.html"> Search Collections</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about.html">About HERIPORT</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Page Content -->
+    <div class="page-heading contact-heading header-text">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="text-content">
+              <h4>Across multiple archives</h4>
+              <h2>Search For Resources</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="find-us">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="section-heading">
+
+
+              <html>
+              <script language="Javascript">
+              //main function called when clicking on search button
+
+
+
+              function search() {
+                //Solr search url
+                var hostURL='http://rafiki1.cs.uct.ac.za:8983/solr/TestSolrXML/select';
+                  var xmlHttpReq = false;
+                  var xmlHttpClient = this;
+
+                // Mozilla/Safari
+                  if (window.XMLHttpRequest) {
+                      xmlHttpClient.xmlHttpReq = new XMLHttpRequest();
+                  }
+                // IE
+                  else if (window.ActiveXObject) {
+                      xmlHttpClient.xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
+                  }
+
+                xmlHttpClient.xmlHttpReq.open('POST', hostURL, true);
+                  xmlHttpClient.xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                  xmlHttpClient.xmlHttpReq.onreadystatechange = function() {
+                      if (xmlHttpClient.xmlHttpReq.readyState == 4) {
+                          showResponse(xmlHttpClient.xmlHttpReq.responseText);
+                      }
+                  }
+
+                  var queryString = appendParams();
+                  xmlHttpClient.xmlHttpReq.send(queryString);
+              }
+
+              // get entered text in query parameter
+
+              function appendParams() {
+                var querystring = document.getElementById("querystring").value;
+                qstr = 'q=' + escape(querystring)+"&fl=id,title,creator";
+
+                return qstr;
+
+              }
+
+              //paring and displaying the response
+              function showResponse(str){
+                document.getElementById("responsestring").innerHTML = str;
+                var rsp = eval('("+str+")');
+                var html = '<strong>Response</strong>';
+                html= "</br><strong>Total Found: "+ rsp.response.numFound+"</strong>";
+                //const fs = require('fs');
+                //var dataJSON = JSON.stringify(document.getElementById("result"))
+                //fs.writeFile('/Users/user/Desktop/Honours_2020/templatemo_546_sixteen_clothing/Output.txt', dataJSON);
+
+                var userInput = document.getElementById("result").value;
+
+                var blob = new Blob(["lol"], { type: "text/plain;charset=utf-8" });
+                saveAs(blob, "Output.txt");
+
+
+
+                document.getElementById("result").value = html;
+
+
+              }
+
+
+              </script>
+
+                <div align='center'>
+                  <p>
+                    <input id="querystring" name="querystring" type="text" placeholder='Search Here'>
+                    <input value="Search" type="button" onClick='search();'>
+                  </p>
+                  <div id="result"></div>
+                  <div id="responsestring"></div>
+                </div>
+                <div id="myData"></div>
+
+
+
+
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="inner-content">
+              <p>Copyright &copy; 2020 HERIPORT.
+
+             Design: <a rel="nofollow noopener" href="https://templatemo.com" target="_blank">TemplateMo</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+    <!-- Additional Scripts -->
+    <script src="assets/js/custom.js"></script>
+    <script src="assets/js/owl.js"></script>
+    <script src="assets/js/slick.js"></script>
+    <script src="assets/js/isotope.js"></script>
+    <script src="assets/js/accordions.js"></script>
+
+
+    <script language = "text/Javascript">
+      cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+      function clearField(t){                   //declaring the array outside of the
+      if(! cleared[t.id]){                      // function makes it static and global
+          cleared[t.id] = 1;  // you could use true and false, but that's more typing
+          t.value='';         // with more chance of typos
+          t.style.color='#fff';
+          }
+      }
+    </script>
+
+
+  </body>
+
+</html>
