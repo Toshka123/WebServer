@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <title>Browse </title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!--
+
+TemplateMo 546 Heriport
+
+https://templatemo.com/tm-546-sixteen-clothing
+
+-->
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/templatemo-sixteen.css">
+    <link rel="stylesheet" href="assets/css/owl.css">
+
+  </head>
+
+  <body>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+
+    <!-- Header -->
+    <header class="">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <a class="navbar-brand" href="index.html"><h2>HERIPORT <em>WEB PORTAL</em></h2></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">Home
+                  <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="browse.html"> Browse Collections</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="search.html">Search Collections</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about.html">About HERIPORT</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Page Content -->
+    <div class="page-heading products-heading header-text">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="text-content">
+              <h2>Browse</h2><br>
+            </div>
+          </div>
+        </div>
+        <div class="products">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="filters">
+                  <ul>
+
+                      <li>
+                        <button class="button button1" onClick='search("id", 0);'> By ID </button>
+                      </li>
+                      <li>
+                        <button class="button button1" onClick='search("dc_title", 0);'> By Title </button>
+                      </li>
+                      <li>
+                        <button class="button button1" onClick='search("dc_modDate", 0);'> By Date </button>
+                      </li>
+                  </ul>
+                </div>
+              </div>
+      </div></div></div>
+
+    </div></div>
+
+<style>
+.button {
+  border: none;
+  color: #f3a23f;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.button1 {
+  background-color: #f3a23f;
+  color: black;
+  border: 2px solid white;
+}
+
+.button1:hover {
+  background-color: black;
+  color: white;
+}
+
+</style>
+
+          <div class="col-md-12">  <div class="products">
+              <div class="container">
+                <div class="row">
+          <br>
+          <div id = "nav2" class="filters" align = 'center'>
+
+          </div>
+
+        </div>
+          <div class="container">
+
+          <div align='center'>
+
+            <div id="result"></div>
+            <div id="responsestring"></div>
+            <div id="head" align = 'center' padding-left= '200px'></div>
+
+            <div id="clean" align = 'left' padding-left= '200px'></div>
+            <div id = "nav2" class="filters" align = 'center'>
+
+          </div>
+          <div id="myData"></div>
+
+          <br>
+
+          </div>
+
+
+      </div>
+    </div>
+
+    <script language="Javascript">
+    //main function called when clicking on search button
+    content ="";
+
+    num = 0;
+
+    function search(content,num) {
+      //Solr search url
+
+
+      console.log("content1 "+ content)
+
+      //  var hostURL='http://rafiki1.cs.uct.ac.za:8983/solr/FinalTests/select';
+      var hostURL='http://rafiki1.cs.uct.ac.za:8983/solr/BLStories/select';
+
+        var xmlHttpReq = false;
+        var xmlHttpClient = this;
+
+      // Mozilla/Safari
+        if (window.XMLHttpRequest) {
+            xmlHttpClient.xmlHttpReq = new XMLHttpRequest();
+        }
+      // IE
+        else if (window.ActiveXObject) {
+            xmlHttpClient.xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+      xmlHttpClient.xmlHttpReq.open('POST', hostURL, true);
+        xmlHttpClient.xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xmlHttpClient.xmlHttpReq.onreadystatechange = function() {
+            if (xmlHttpClient.xmlHttpReq.readyState == 4) {
+                showResponse(xmlHttpClient.xmlHttpReq.responseText,num);
+            }}
+
+        var queryString = appendParams(content,num);
+        xmlHttpClient.xmlHttpReq.send(queryString);
+    }
+
+
+
+    // get entered text in query parameter
+
+    function appendParams(content,num) {
+
+      var querystring = " ";
+    //  console.log("num: "+ num)
+    //  console.log("contentapp: "+ content)
+
+    //  qstr = 'q=' + "genre:"+escape(querystring)+" || author:"+escape(querystring)+" || title:"+escape(querystring)+"&fl=id,title,author,genre";
+      if (content == "dc_title" && num==0){
+        // lessNum = parseInt(num-30)
+        qstrAll = 'q='+ "*:*" +"&start="+num+"&rows="+parseInt(num+30)+"&sort=dc_title asc&fl=id,dc_title,dc_modDate";
+        num = num+30
+        document.getElementById('nav2').innerHTML = " <ul> <li class=\"active\"> <input value=\"Previous\" type=\"button\" onClick='search(\"dc_title\",num = num);'> </li> <li> <input value=\"Next\" type=\"button\" onClick='search(\"dc_title\", num = num+30);'> </li> </ul>"
+      }
+      else if (content == "id" && num ==0){
+      //  lessNum = parseInt(num-30)
+
+        qstrAll = 'q='+ "*:*" +"&start="+num+"&rows="+parseInt(num+30)+"&sort=id asc&fl=id,dc_title,dc_modDate";
+        num = num+30
+        document.getElementById('nav2').innerHTML = " <ul> <li class=\"active\"> <input value=\"Previous\" type=\"button\" onClick='search(\"id\",num = num);'> </li> <li> <input value=\"Next\" type=\"button\" onClick='search(\"id\", num = num+30);'> </li> </ul>"
+
+      }
+      else if (content == "dc_modDate" && num ==0){
+      //  lessNum = parseInt(num-30)
+        qstrAll = 'q='+ "*:*" +"&start="+num+"&rows="+parseInt(num+30)+"&sort=dc_modDate asc&fl=id,dc_title,dc_modDate";
+        num = num+30
+        document.getElementById('nav2').innerHTML = " <ul> <li class=\"active\"> <input value=\"Previous\" type=\"button\" onClick='search(\"dc_modDate\",num = num);'> </li> <li> <input value=\"Next\" type=\"button\" onClick='search(\"dc_modDate\", num = num+30)'> </li> </ul>"
+
+      }
+
+
+      else if (content == "dc_title" && num>0){
+        // lessNum = parseInt(num-30)
+        qstrAll = 'q='+ "*:*" +"&start="+num+"&rows="+parseInt(num+30)+"&sort=dc_title asc&fl=id,dc_title,dc_modDate";
+        num = num+30
+        document.getElementById('nav2').innerHTML = " <ul> <li class=\"active\"> <input value=\"Previous\" type=\"button\" onClick='search(\"dc_title\",num = num-30);'> </li> <li> <input value=\"Next\" type=\"button\" onClick='search(\"dc_title\", num = num+30);'> </li> </ul>"
+      }
+      else if (content == "id" && num >0){
+      //  lessNum = parseInt(num-30)
+
+        qstrAll = 'q='+ "*:*" +"&start="+num+"&rows="+parseInt(num+30)+"&sort=id asc&fl=id,dc_title,dc_modDate";
+        num = num+30
+        document.getElementById('nav2').innerHTML = " <ul> <li class=\"active\"> <input value=\"Previous\" type=\"button\" onClick='search(\"id\",num = num-30);'> </li> <li> <input value=\"Next\" type=\"button\" onClick='search(\"id\", num = num+30);'> </li> </ul>"
+
+      }
+      else if (content == "dc_modDate" && num >0){
+      //  lessNum = parseInt(num-30)
+        qstrAll = 'q='+ "*:*" +"&start="+num+"&rows="+parseInt(num+30)+"&sort=dc_modDate asc&fl=id,dc_title,dc_modDate";
+        num = num+30
+        document.getElementById('nav2').innerHTML = " <ul> <li class=\"active\"> <input value=\"Previous\" type=\"button\" onClick='search(\"dc_modDate\",num = num-30);'> </li> <li> <input value=\"Next\" type=\"button\" onClick='search(\"dc_modDate\", num = num+30)'> </li> </ul>"
+
+      }
+    return qstrAll;
+    }
+
+
+
+
+    //paring and displaying the response
+    function showResponse(str, num){
+    //  document.getElementById("responsestring").innerHTML = str;
+      var rsp = eval("("+str+")");
+      var html = '<strong></strong>';
+
+      //html= "</br><strong>Total Found: "+ rsp.response.numFound+"</strong>";
+      console.log(rsp)
+
+      var res= "Showing results " +num+" to "+ parseInt(30+num)+ " of "+rsp.response.numFound +" results</br>";
+      var i;
+      console.log("nommer: "+num)
+    //  console.log("doccs: "+ parseInt(rsp.response.docs.length+num))
+    //  console.log("resp30: "+rsp.response.docs[30])
+    if(num>=0){
+
+      for (i = num; i < rsp.response.docs.length; i++) {
+      //  html+= rsp.response.docs[i]
+
+        var first = rsp.response.docs[i];
+      //  html += "<br>Item src: "+ first._src_
+      //  html += "<br>Item version: "+ first.genre
+      console.log("resp: "+parseInt(rsp.response.docs.length+num))
+
+      //console.log("i: "+i)
+      //console.log("first: "+ first)
+
+      //html += "<br>ID: "+ first.id
+      html += "<br> <b>"+parseInt(i+1)+ ". Identifier:</b> "+"<a href = "+first.id +">"+first.id+" </a>"
+      html += "<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Title:</b> "+first.dc_title
+      html += "<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date Added: </b>"+ first.dc_modDate +"</br>"
+      }
+
+      document.getElementById("head").innerHTML = res
+
+      document.getElementById("clean").innerHTML = html
+
+
+      var userInput = str;
+
+
+
+    //  document.getElementById("result").value = html;
+
+      //var a = document.createElement("a");
+      //var content = JSON.stringify(rsp.response);
+      //var file = new Blob([content], {type: 'text/plain'});
+      //a.href = URL.createObjectURL(file);
+      //a.download = 'Output.txt';
+      //a.click();
+
+
+}else{num= num+30;}
+    }
+
+
+    </script>
+
+
+
+
+
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="inner-content">
+              <p>Copyright &copy; 2020 HERIPORT.
+
+             Design: <a rel="nofollow noopener" href="https://templatemo.com" target="_blank">TemplateMo</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+    <!-- Additional Scripts -->
+    <script src="assets/js/custom.js"></script>
+    <script src="assets/js/owl.js"></script>
+    <script src="assets/js/slick.js"></script>
+    <script src="assets/js/isotope.js"></script>
+    <script src="assets/js/accordions.js"></script>
+
+
+    <script language = "text/Javascript">
+      cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+      function clearField(t){                   //declaring the array outside of the
+      if(! cleared[t.id]){                      // function makes it static and global
+          cleared[t.id] = 1;  // you could use true and false, but that's more typing
+          t.value='';         // with more chance of typos
+          t.style.color='#fff';
+          }
+      }
+    </script>
+
+
+  </body>
+
+</html>
