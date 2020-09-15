@@ -87,11 +87,12 @@ https://templatemo.com/tm-546-sixteen-clothing
                 <div class="filters">
                   <ul>
 
-                      <li>
-                        <button class="button button1" onClick='search("id", 0);'> By ID </button>
-                      </li>
+
                       <li>
                         <button class="button button1" onClick='search("dc_title", 0);'> By Title </button>
+                      </li>
+                    <li>
+                        <button class="button button1" onClick='search("dc_subject", 0);'> By Archive Subject</button>
                       </li>
                       <li>
                         <button class="button button1" onClick='search("dc_modDate", 0);'> By Date </button>
@@ -146,6 +147,7 @@ https://templatemo.com/tm-546-sixteen-clothing
             <div id="result"></div>
             <div id="responsestring"></div>
             <div id="head" align = 'center' padding-left= '200px'></div>
+            <div id="headChoice" align = 'center' padding-left= '200px'></div>
 
             <div id="clean" align = 'left' padding-left= '200px'></div>
             <div id = 'navigation' class="col-md-12">  <div class="products">
@@ -245,7 +247,7 @@ https://templatemo.com/tm-546-sixteen-clothing
       console.log("content1 "+ content)
 
       //  var hostURL='http://rafiki1.cs.uct.ac.za:8983/solr/FinalTests/select';
-      var hostURL='http://rafiki1.cs.uct.ac.za:8983/solr/BLFHRepository/select';
+      var hostURL='http://rafiki1.cs.uct.ac.za:8983/solr/ThreeRepos/select';
 
         var xmlHttpReq = false;
         var xmlHttpClient = this;
@@ -279,7 +281,7 @@ https://templatemo.com/tm-546-sixteen-clothing
       var querystring = " ";
     //  console.log("num: "+ num)
     //  console.log("contentapp: "+ content)
-
+      var browseChoice ="";
     //  qstr = 'q=' + "genre:"+escape(querystring)+" || author:"+escape(querystring)+" || title:"+escape(querystring)+"&fl=id,title,author,genre";
       if (content == "dc_title" && num==0){
         // lessNum = parseInt(num-30)
@@ -287,16 +289,19 @@ https://templatemo.com/tm-546-sixteen-clothing
         num = num+30
         document.getElementById('nav2').innerHTML = " <ul> <li class=\"active\"> <input value=\"Previous Results\" type=\"button\" onClick=\'search(\"dc_title\",num = num);\'> </li> <li> <input value=\"Next Results\" type=\"button\" onClick=\'search(\"dc_title\", num = num+30);\'> </li> </ul>"
         document.getElementById('nav3').innerHTML = " <ul> <li class=\"active\"> <input value=\"Previous Results\" type=\"button\" onClick=\'search(\"dc_title\",num = num);\'> </li> <li> <input value=\"Next Results\" type=\"button\" onClick=\'search(\"dc_title\", num = num+30);\'> </li> </ul>"
+        browseChoice = "Browsing by Title."
+        document.getElementById("headChoice").innerHTML = browseChoice
 
       }
-      else if (content == "id" && num ==0){
+      else if (content == "dc_subject" && num ==0){
       //  lessNum = parseInt(num-30)
 
-        qstrAll = 'q='+ "*:*" +"&start="+num+"&rows="+parseInt(num+30)+"&sort=id asc&fl=id,dc_title,dc_modDate,dc_creator,dc_contributor,dc_description,dc_rights,dc_type,dc_subject";
+        qstrAll = 'q='+ "*:*" +"&start="+num+"&rows="+parseInt(num+30)+"&sort=dc_subject asc&fl=id,dc_title,dc_modDate,dc_creator,dc_contributor,dc_description,dc_rights,dc_type,dc_subject";
         num = num+30
-        document.getElementById('nav2').innerHTML = " <ul> <li class=\"active\"> <input value=\"Previous Results\" type=\"button\" onClick=\'search(\"id\",num = num);\'> </li> <li> <input value=\"Next Results\" type=\"button\" onClick=\'search(\"id\", num = num+30);\'> </li> </ul>"
-        document.getElementById('nav3').innerHTML = " <ul> <li class=\"active\"> <input value=\"Previous Results\" type=\"button\" onClick=\'search(\"id\",num = num);\'> </li> <li> <input value=\"Next Results\" type=\"button\" onClick=\'search(\"id\", num = num+30);\'> </li> </ul>"
-
+        document.getElementById('nav2').innerHTML = " <ul> <li class=\"active\"> <input value=\"Previous Results\" type=\"button\" onClick=\'search(\"dc_subject\",num = num);\'> </li> <li> <input value=\"Next Results\" type=\"button\" onClick=\'search(\"dc_subject\", num = num+30);\'> </li> </ul>"
+        document.getElementById('nav3').innerHTML = " <ul> <li class=\"active\"> <input value=\"Previous Results\" type=\"button\" onClick=\'search(\"dc_subject\",num = num);\'> </li> <li> <input value=\"Next Results\" type=\"button\" onClick=\'search(\"dc_subject\", num = num+30);\'> </li> </ul>"
+        browseChoice = "Browsing by Archive Subject."
+        document.getElementById("headChoice").innerHTML = browseChoice
       }
       else if (content == "dc_modDate" && num ==0){
       //  lessNum = parseInt(num-30)
@@ -304,7 +309,8 @@ https://templatemo.com/tm-546-sixteen-clothing
         num = num+30
         document.getElementById('nav2').innerHTML = " <ul> <li class=\"active\"> <input value=\"Previous Results\" type=\"button\" onClick=\'search(\"dc_modDate\",num = num);\'> </li> <li> <input value=\"Next Results\" type=\"button\" onClick=\'search(\"dc_modDate\", num = num+30);\'> </li> </ul>"
         document.getElementById('nav3').innerHTML = " <ul> <li class=\"active\"> <input value=\"Previous Results\" type=\"button\" onClick=\'search(\"dc_modDate\",num = num);\'> </li> <li> <input value=\"Next Results\" type=\"button\" onClick=\'search(\"dc_modDate\", num = num+30);\'> </li> </ul>"
-
+        browseChoice = "Browsing by Date Added."
+        document.getElementById("headChoice").innerHTML = browseChoice
       }
 
 
@@ -314,16 +320,18 @@ https://templatemo.com/tm-546-sixteen-clothing
         num = num+30
         document.getElementById('nav2').innerHTML = " <ul> <li class=\"active\"> <input value=\"Previous Results\" type=\"button\" onClick=\'search(\"dc_title\",num = num-30);\'> </li> <li> <input value=\"Next Results\" type=\"button\" onClick=\'search(\"dc_title\", num = num+30);\'> </li> </ul>"
         document.getElementById('nav3').innerHTML = " <ul> <li class=\"active\"> <input value=\"Previous Results\" type=\"button\" onClick=\'search(\"dc_title\",num = num-30);\'> </li> <li> <input value=\"Next Results\" type=\"button\" onClick=\'search(\"dc_title\", num = num+30);\'> </li> </ul>"
-
+        browseChoice = "Browsing by Title."
+        document.getElementById("headChoice").innerHTML = browseChoice
       }
-      else if (content == "id" && num >0){
+      else if (content == "dc_subject" && num >0){
       //  lessNum = parseInt(num-30)
 
-        qstrAll = 'q='+ "*:*" +"&start="+num+"&rows="+parseInt(num+30)+"&sort=id asc&fl=id,dc_title,dc_modDate,dc_creator,dc_contributor,dc_description,dc_rights,dc_type,dc_subject";
+        qstrAll = 'q='+ "*:*" +"&start="+num+"&rows="+parseInt(num+30)+"&sort=dc_subject asc&fl=id,dc_title,dc_modDate,dc_creator,dc_contributor,dc_description,dc_rights,dc_type,dc_subject";
         num = num+30
-        document.getElementById('nav2').innerHTML = " <ul> <li class=\"active\"> <input value=\"Previous Results\" type=\"button\" onClick=\'search(\"id\",num = num-30);\'> </li> <li> <input value=\"Next Results\" type=\"button\" onClick=\'search(\"id\", num = num+30);\'> </li> </ul>"
-        document.getElementById('nav3').innerHTML = " <ul> <li class=\"active\"> <input value=\"Previous Results\" type=\"button\" onClick=\'search(\"id\",num = num-30);\'> </li> <li> <input value=\"Next Results\" type=\"button\" onClick=\'search(\"id\", num = num+30);\'> </li> </ul>"
-
+        document.getElementById('nav2').innerHTML = " <ul> <li class=\"active\"> <input value=\"Previous Results\" type=\"button\" onClick=\'search(\"dc_subject\",num = num-30);\'> </li> <li> <input value=\"Next Results\" type=\"button\" onClick=\'search(\"dc_subject\", num = num+30);\'> </li> </ul>"
+        document.getElementById('nav3').innerHTML = " <ul> <li class=\"active\"> <input value=\"Previous Results\" type=\"button\" onClick=\'search(\"dc_subject\",num = num-30);\'> </li> <li> <input value=\"Next Results\" type=\"button\" onClick=\'search(\"dc_subject\", num = num+30);\'> </li> </ul>"
+        browseChoice = "Browsing by Archive Subject."
+        document.getElementById("headChoice").innerHTML = browseChoice
       }
       else if (content == "dc_modDate" && num >0){
       //  lessNum = parseInt(num-30)
@@ -331,7 +339,8 @@ https://templatemo.com/tm-546-sixteen-clothing
         num = num+30
         document.getElementById('nav2').innerHTML = " <ul> <li class=\"active\"> <input value=\"Previous Results\" type=\"button\" onClick=\'search(\"dc_modDate\",num = num-30);\'> </li> <li> <input value=\"Next Results\" type=\"button\" onClick=\'search(\"dc_modDate\", num = num+30);\'> </li> </ul>"
         document.getElementById('nav3').innerHTML = " <ul> <li class=\"active\"> <input value=\"Previous Results\" type=\"button\" onClick=\'search(\"dc_modDate\",num = num-30);\'> </li> <li> <input value=\"Next Results\" type=\"button\" onClick=\'search(\"dc_modDate\", num = num+30);\'> </li> </ul>"
-
+        browseChoice = "Browsing by Date Added."
+        document.getElementById("headChoice").innerHTML = browseChoice
       }
     return qstrAll;
     }
@@ -420,93 +429,123 @@ https://templatemo.com/tm-546-sixteen-clothing
               recordID = i
               //  htmlRecord += "<br> <b>"+parseInt(i+1)+ ". dict['identifier:</b> "+"<a href = "+first.dict['id+">"+first.dict['id+" </a>"
                 try {  htmlRecord += "<br><b> "+parseInt(num+1)+". Title:</b> " +"<a  href=\"#\" onclick='moreFunc(first1, str,dict[\"id1\"], num);'>"+first1.dc_title+" </a>"
+                htmlRecord += "<br><b> Archive Subject:</b> "+first1.dc_subject+" </a>"
                 htmlRecord += "<br><b> Date Added:</b> "+first1.dc_modDate+" </a><hr> "} catch(e){}
 
                 try {htmlRecord += "<b> "+parseInt(num+2)+". Title:</b> " +"<a  href=\"#\" onclick='moreFunc(first2, str,dict[\"id2\"], num);'>"+first2.dc_title+" </a> "
+                htmlRecord += "<br><b> Archive Subject:</b> "+first2.dc_subject+" </a>"
                 htmlRecord += "<br><b> Date Added:</b> "+first2.dc_modDate+" </a> <hr> "} catch(e){}
 
                 try {htmlRecord += "<b> "+parseInt(num+3)+". Title:</b> " +"<a  href=\"#\" onclick='moreFunc(first3, str,dict[\"id3\"], num);'>"+first3.dc_title+" </a> "
+                htmlRecord += "<br><b> Archive Subject:</b> "+first3.dc_subject+" </a>"
                 htmlRecord += "<br><b> Date Added:</b> " +first3.dc_modDate+" </a> <hr> "} catch(e){}
 
                 try {htmlRecord += "<b> "+parseInt(num+4)+". Title:</b> " +"<a  href=\"#\" onclick='moreFunc(first4, str,dict[\"id4\"], num);'>"+first4.dc_title+" </a> "
+                htmlRecord += "<br><b> Archive Subject:</b> "+first4.dc_subject+" </a>"
                 htmlRecord += "<br><b> Date Added:</b> "+first4.dc_modDate+" </a> <hr> "} catch(e){}
 
                 try {htmlRecord += "<b> "+parseInt(num+5)+". Title:</b> " +"<a  href=\"#\" onclick='moreFunc(first5, str,dict[\"id5\"], num);'>"+first5.dc_title+" </a> "
+                htmlRecord += "<br><b> Archive Subject:</b> "+first5.dc_subject+" </a>"
                 htmlRecord += "<br><b> Date Added:</b> "+first5.dc_modDate+" </a> <hr> "} catch(e){}
 
                 try {htmlRecord += "<b> "+parseInt(num+6)+". Title:</b> " +"<a  href=\"#\" onclick='moreFunc(first6, str,dict[\"id6\"], num);'>"+first6.dc_title+" </a> "
+                htmlRecord += "<br><b> Archive Subject:</b> "+first6.dc_subject+" </a>"
                 htmlRecord += "<br><b> Date Added:</b> " +first6.dc_modDate+" </a> <hr> "} catch(e){}
 
-              try {htmlRecord += "<b> "+parseInt(num+7)+". Title:</b> " +"<a  href=\"#\" onclick='moreFunc(first7, str,dict[\"id7\"], num);'>"+first7.dc_title+" </a>  "
+                try {htmlRecord += "<b> "+parseInt(num+7)+". Title:</b> " +"<a  href=\"#\" onclick='moreFunc(first7, str,dict[\"id7\"], num);'>"+first7.dc_title+" </a>  "
+                htmlRecord += "<br><b> Archive Subject:</b> "+first7.dc_subject+" </a>"
                 htmlRecord += "<br><b> Date Added:</b> " +first7.dc_modDate+" </a> <hr> "} catch(e){}
 
-              try {htmlRecord += "<b> "+parseInt(num+8)+". Title:</b> " +"<a  href=\"#\" onclick='moreFunc(first8, str,dict[\"id8\"], num);'>"+first8.dc_title+" </a>  "
+                try {htmlRecord += "<b> "+parseInt(num+8)+". Title:</b> " +"<a  href=\"#\" onclick='moreFunc(first8, str,dict[\"id8\"], num);'>"+first8.dc_title+" </a>  "
+                htmlRecord += "<br><b> Archive Subject:</b> "+first8.dc_subject+" </a>"
                 htmlRecord += "<br><b> Date Added:</b> " +first8.dc_modDate+" </a> <hr> "} catch(e){}
 
                 try {htmlRecord += "<b> "+parseInt(num+9)+". Title:</b> " +"<a  href=\"#\" onclick='moreFunc(first9, str,dict[\"id9\"], num);'>"+first9.dc_title+" </a>  "
+                htmlRecord += "<br><b> Archive Subject:</b> "+first9.dc_subject+" </a>"
                 htmlRecord += "<br><b> Date Added:</b> " +first9.dc_modDate+" </a> <hr> "} catch(e){}
 
                 try {htmlRecord += "<b> "+parseInt(num+10)+". Title:</b> " +"<a  href=\"#\" onclick='moreFunc(first10, str,dict[\"id10\"], num);'>"+first10.dc_title+" </a>  "
+                htmlRecord += "<br><b> Archive Subject:</b> "+first10.dc_subject+" </a>"
                 htmlRecord += "<br><b> Date Added:</b> " +first10.dc_modDate+" </a> <hr> "} catch(e){}
 
                 try {htmlRecord += "<b> "+parseInt(num+11)+". Title:</b> " +"<a  href=\"#\" onclick='moreFunc(first11, str,dict[\"id11\"], num);'>"+first11.dc_title+" </a>  "
+                htmlRecord += "<br><b> Archive Subject:</b> "+first11.dc_subject+" </a>"
                 htmlRecord += "<br><b> Date Added:</b> " +first11.dc_modDate+" </a> <hr> "} catch(e){}
 
                 try {htmlRecord += "<b> "+parseInt(num+12)+". Title:</b> " +"<a  href=\"#\" onclick='moreFunc(first12, str,dict[\"id12\"], num);'>"+first12.dc_title+" </a>  "
+                htmlRecord += "<br><b> Archive Subject:</b> "+first12.dc_subject+" </a>"
                 htmlRecord += "<br><b> Date Added:</b> " +first12.dc_modDate+" </a> <hr> "} catch(e){}
 
                 try {htmlRecord += "<b> "+parseInt(num+13)+". Title:</b> " +"<a  href=\"#\" onclick='moreFunc(first13, str,dict[\"id13\"], num);'>"+first13.dc_title+" </a> "
+                htmlRecord += "<br><b> Archive Subject:</b> "+first13.dc_subject+" </a>"
                 htmlRecord += "<br><b> Date Added:</b> " +first13.dc_modDate+" </a> <hr> "} catch(e){}
 
                 try {htmlRecord += "<b> "+parseInt(num+14)+". Title:</b> " +"<a  href=\"#\" onclick='moreFunc(first14, str,dict[\"id14\"], num);'>"+first14.dc_title+" </a>  "
+                htmlRecord += "<br><b> Archive Subject:</b> "+first14.dc_subject+" </a>"
                 htmlRecord += "<br><b> Date Added:</b> " +first14.dc_modDate+" </a> <hr> "} catch(e){}
 
                 try {htmlRecord += "<b> "+parseInt(num+15)+". Title:</b> " +"<a  href=\"#\" onclick='moreFunc(first15, str,dict[\"id15\"], num);'>"+first15.dc_title+" </a>  "
+                htmlRecord += "<br><b> Archive Subject:</b> "+first15.dc_subject+" </a>"
                 htmlRecord += "<br><b> Date Added:</b> " +first15.dc_modDate+" </a> <hr> "} catch(e){}
 
                 try {htmlRecord += "<b> "+parseInt(num+16)+". Title:</b> " +"<a  href=\"#\" onclick='moreFunc(first16, str,dict[\"id16\"], num);'>"+first16.dc_title+" </a>  "
+                htmlRecord += "<br><b> Archive Subject:</b> "+first16.dc_subject+" </a>"
                 htmlRecord += "<br><b> Date Added:</b> " +first16.dc_modDate+" </a> <hr> "} catch(e){}
 
                 try {htmlRecord += "<b> "+parseInt(num+17)+". Title:</b> " +"<a  href=\"#\" onclick='moreFunc(first17, str,dict[\"id17\"], num);'>"+first17.dc_title+" </a>  "
+                htmlRecord += "<br><b> Archive Subject:</b> "+first17.dc_subject+" </a>"
                 htmlRecord += "<br><b> Date Added:</b> " +first17.dc_modDate+" </a> <hr> "} catch(e){}
 
                 try {htmlRecord += "<b> "+parseInt(num+18)+". Title:</b> " +"<a  href=\"#\" onclick='moreFunc(first18, str,dict[\"id18\"], num);'>"+first18.dc_title+" </a>  "
+                htmlRecord += "<br><b> Archive Subject:</b> "+first18.dc_subject+" </a>"
                 htmlRecord += "<br><b> Date Added:</b> " +first18.dc_modDate+" </a> <hr> "} catch(e){}
 
                 try {htmlRecord += "<b> "+parseInt(num+19)+". Title:</b> " +"<a  href=\"#\" onclick='moreFunc(first19, str,dict[\"id19\"], num);'>"+first19.dc_title+" </a>  "
+                htmlRecord += "<br><b> Archive Subject:</b> "+first19.dc_subject+" </a>"
                 htmlRecord += "<br><b> Date Added:</b> " +first19.dc_modDate+" </a> <hr> "} catch(e){}
 
                 try {htmlRecord += "<b> "+parseInt(num+20)+". Title:</b> " +"<a  href=\"#\" onclick='moreFunc(first20, str,dict[\"id20\"], num);'>"+first20.dc_title+" </a>  "
+                htmlRecord += "<br><b> Archive Subject:</b> "+first20.dc_subject+" </a>"
                 htmlRecord += "<br><b> Date Added:</b> " +first20.dc_modDate+" </a> <hr> "} catch(e){}
 
                 try {htmlRecord += "<b> "+parseInt(num+21)+". Title:</b> " +"<a  href=\"#\" onclick='moreFunc(first21, str,dict[\"id21\"], num);'>"+first21.dc_title+" </a>  "
+                htmlRecord += "<br><b> Archive Subject:</b> "+first21.dc_subject+" </a>"
                 htmlRecord += "<br><b> Date Added:</b> " +first21.dc_modDate+" </a> <hr> "} catch(e){}
 
                 try {htmlRecord += "<b> "+parseInt(num+22)+". Title:</b> " +"<a  href=\"#\" onclick='moreFunc(first22, str,dict[\"id22\"], num);'>"+first22.dc_title+" </a>  "
+                htmlRecord += "<br><b> Archive Subject:</b> "+first22.dc_subject+" </a>"
                 htmlRecord += "<br><b> Date Added:</b> " +first22.dc_modDate+" </a> <hr> "} catch(e){}
 
                 try {htmlRecord += "<b> "+parseInt(num+23)+". Title:</b> " +"<a  href=\"#\" onclick='moreFunc(first23, str,dict[\"id23\"], num);'>"+first23.dc_title+" </a>  "
+                htmlRecord += "<br><b> Archive Subject:</b> "+first23.dc_subject+" </a>"
                 htmlRecord += "<br><b> Date Added:</b> " +first23.dc_modDate+" </a> <hr> "} catch(e){}
 
                 try {htmlRecord += "<b> "+parseInt(num+24)+". Title:</b> " +"<a  href=\"#\" onclick='moreFunc(first24, str,dict[\"id24\"], num);'>"+first24.dc_title+" </a>  "
+                htmlRecord += "<br><b> Archive Subject:</b> "+first24.dc_subject+" </a>"
                 htmlRecord += "<br><b> Date Added:</b> " +first24.dc_modDate+" </a> <hr> "} catch(e){}
 
                 try {htmlRecord += "<b> "+parseInt(num+25)+". Title:</b> " +"<a  href=\"#\" onclick='moreFunc(first25, str,dict[\"id25\"], num);'>"+first25.dc_title+" </a>  "
+                htmlRecord += "<br><b> Archive Subject:</b> "+first25.dc_subject+" </a>"
                 htmlRecord += "<br><b> Date Added:</b> " +first25.dc_modDate+" </a> <hr> "} catch(e){}
 
                 try {htmlRecord += "<b> "+parseInt(num+26)+". Title:</b> " +"<a  href=\"#\" onclick='moreFunc(first26, str,dict[\"id26\"], num);'>"+first26.dc_title+" </a>  "
+                htmlRecord += "<br><b> Archive Subject:</b> "+first26.dc_subject+" </a>"
                 htmlRecord += "<br><b> Date Added:</b> " +first26.dc_modDate+" </a> <hr> "} catch(e){}
 
                 try {htmlRecord += "<b> "+parseInt(num+27)+". Title:</b> " +"<a  href=\"#\" onclick='moreFunc(first27, str,dict[\"id27\"], num);'>"+first27.dc_title+" </a>  "
+                htmlRecord += "<br><b> Archive Subject:</b> "+first27.dc_subject+" </a>"
                 htmlRecord += "<br><b> Date Added:</b> " +first27.dc_modDate+" </a> <hr> "} catch(e){}
 
                 try {htmlRecord += "<b> "+parseInt(num+28)+". Title:</b> " +"<a  href=\"#\" onclick='moreFunc(first28, str,dict[\"id28\"], num);'>"+first28.dc_title+" </a>  "
+                htmlRecord += "<br><b> Archive Subject:</b> "+first28.dc_subject+" </a>"
                 htmlRecord += "<br><b> Date Added:</b> " +first28.dc_modDate+" </a> <hr> "} catch(e){}
 
                 try {htmlRecord += "<b> "+parseInt(num+29)+". Title:</b> " +"<a  href=\"#\" onclick='moreFunc(first29, str,dict[\"id29\"], num);'>"+first29.dc_title+" </a>  "
+                htmlRecord += "<br><b> Archive Subject:</b> "+first29.dc_subject+" </a>"
                 htmlRecord += "<br><b> Date Added:</b> " +first29.dc_modDate+" </a> <hr> "} catch(e){}
 
                 try {htmlRecord += "<b> "+parseInt(num+30)+". Title:</b> " +"<a  href=\"#\" onclick='moreFunc(first30, str,dict[\"id30\"], num);'>"+first30.dc_title+" </a>  "
+                htmlRecord += "<br><b> Archive Subject:</b> "+first30.dc_subject+" </a>"
                 htmlRecord += "<br><b> Date Added:</b> " +first30.dc_modDate+" </a> <hr> "} catch(e){}
 
                 var myDiv = document.getElementById('navigation');

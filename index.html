@@ -150,7 +150,7 @@ https://templatemo.com/tm-546-sixteen-clothing
     function search(num) {
       //Solr search url
       //  var hostURL='http://rafiki1.cs.uct.ac.za:8983/solr/FinalTests/select';
-        var hostURL='http://rafiki1.cs.uct.ac.za:8983/solr/BLFH1/select';
+        var hostURL='http://rafiki1.cs.uct.ac.za:8983/solr/ThreeRepos/select';
 
         var xmlHttpReq = false;
         var xmlHttpClient = this;
@@ -182,7 +182,7 @@ https://templatemo.com/tm-546-sixteen-clothing
 
 
       //qstr = 'q=' + " dc_title:"+escape(querystring)+ "&fl=id,dc_title,dc_modDate";
-      qstrAll = 'q='+ "*:*" +"&start="+0+"&rows="+15+"&sort=dc_modDate asc&fl=id,dc_title,dc_modDate";
+      qstrAll = 'q='+ "*:*" +"&start="+0+"&rows="+15+"&sort=dc_modDate desc&fl=id,dc_title,dc_modDate";
     //  qstrAll = 'q='+ "*:*" +"&fl=id,title,author,genre";
       return qstrAll;
     }
